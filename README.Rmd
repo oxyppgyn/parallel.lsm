@@ -15,6 +15,8 @@ knitr::opts_chunk$set(
 
 # *parallel.lsm* <img src="man/figures/logo.png" align="right" height="138"/>
 
+**This package is in early development without testing, but may be fully functional.**
+
 *parallel.lsm* provides alternative versions of *landscapemetrics* functions that use parallelization with the goal of reducing processing time for large rasters or datasets. Parallel processing is not used within *landscapemetrics* itself, these wrappers are mainly useful when you must calculate many (or all) metrics across landscapes or a very large set of sample points (either can be split between CPU cores). If it doesn't take an excessive amount of time to run your landscape calculations or you can't split your data outside of *landscapemetrics*, this package unfortunately is not the solution to use.
 
 Parallel processing may be added to the main code of *landscapemetrics* in the future that makes this package obsolete.

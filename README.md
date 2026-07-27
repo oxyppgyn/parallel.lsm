@@ -3,6 +3,9 @@
 
 # *parallel.lsm* <img src="man/figures/logo.png" align="right" height="138"/>
 
+**This package is in early development without testing, but may be fully
+functional.**
+
 *parallel.lsm* provides alternative versions of *landscapemetrics*
 functions that use parallelization with the goal of reducing processing
 time for large rasters or datasets. Parallel processing is not used
