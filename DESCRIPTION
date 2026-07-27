@@ -1,0 +1,24 @@
+Type: Package
+Package: parallel.lsm
+Title: Parallel Processing Wrappers for _landscapemetrics_ Functions
+Version: 0.0.0.9000
+Authors@R: person("Tanner", "Hammond", , "idonutunderstand@gmail.com", role = c("aut", "cre"))
+Description: Provides wrapper functions for _landscapemetrics_ that process data in parallel. parallel.lsm wrappers stay close to the original package and give users already familiar with landscapemetrics a quick method to speed up processing.
+License: GPL (>= 3)
+URL: https://oxyppgyn.github.io/parallel.lsm, https://github.com/oxyppgyn/parallel.lsm
+BugReports: https://github.com/oxyppgyn/parallel.lsm/issues
+Encoding: UTF-8
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 8.0.0
+Imports: landscapemetrics, parallelly, future, future.apply, checkmate, dplyr 
+Depends: R (>= 4.1.0) 
+LazyData: true
+Suggests:
+    knitr,
+    rmarkdown,
+    testthat (>= 3.0.0),
+VignetteBuilder: knitr
+Collate: 
+    'para_lsm.R'
+    'lsm_funcs.R'
+Config/testthat/edition: 3
