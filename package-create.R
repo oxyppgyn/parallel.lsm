@@ -35,7 +35,7 @@ remove.packages(camRa)
 #system.file('extdata', 'ena24subset_MegaDet_recognition.json', package = "camRa")
 
 # ---------- Make Tests File -----------
-#usethis::use_test('filename.R')
+#usethis::use_test('lsm-funcs.R')
 
 # ---------- Make Vignette ----------
 #usethis::use_vignette("MY-VINGETTE-NAME")
@@ -101,8 +101,8 @@ Disallow: /")
 
 #Make ai.txt
 writeLines(con = 'docs/ai.txt', text = "User-Agent: *
-No-Training: *
-No-Inference: *")
+Training: deny
+Inference: deny")
 
 #Delete llms.txt
 file.remove('docs/llms.txt')
@@ -110,4 +110,43 @@ file.remove('docs/llms.txt')
 #Run CMD Check
 devtools::check()
 
+#
+#parallel.lsm_l_pd(landscape = list(landscapemetrics::augusta_nlcd, landscapemetrics::augusta_nlcd), split_on = 'landscape')
 
+#lsm_l_iji(landscape = list(landscapemetrics::augusta_nlcd, landscapemetrics::augusta_nlcd), split_on = 'landscape')
+
+
+#Functions/Objects in landscapemetrics to Exclude
+#' func_exclude <- c(
+#'   'lsm_abbreviations_names', 'landscape', 'augusta_nlcd', 'podlasie_ccilc',
+#'   'options_landscapemetrics', 'show_patches', 'show_cores', 'show_correlation',
+#'   'show_lsm', 'list_lsm'
+#' )
+#'
+#' #List Everything in Landscapemetrics with Filter
+#' funcs <- getNamespaceExports('landscapemetrics')
+#' funcs <- funcs[!funcs %in% func_exclude]
+#'
+#' #Create Functions from Text String
+#' for (func in funcs) {
+#'   func_text <- paste0("#' @rdname parallel.lsm
+#'   #' @export
+#'   parallel.", func, " <- function(..., split_on = NULL, join_tbl = TRUE) {
+#'     result <- lsm_format_run(..., split_on = split_on, join_tbl = join_tbl, func = landscapemetrics::", func, ")
+#'     return(result)
+#'   }
+#'   ")
+#'   eval(parse(text = func_text))
+#'
+#' }
+#'
+#' func_format <- function(func) {
+#'   func_text <- paste0("#' @rdname parallel.lsm
+#'   #' @export
+#'   parallel.", func, " <- function(..., split_on = NULL, join_tbl = TRUE) {
+#'     result <- lsm_format_run(..., split_on = split_on, join_tbl = join_tbl, func = landscapemetrics::", func, ")
+#'     return(result)
+#'   }
+#'   ")
+#'   #eval(parse(text = func_text))
+#' }

@@ -1,9 +1,12 @@
 <urlset xmlns = 'http://www.sitemaps.org/schemas/sitemap/0.9'>
 <url><loc>https://oxyppgyn.github.io/parallel.lsm/404.html</loc></url>
+<url><loc>https://oxyppgyn.github.io/parallel.lsm/articles/index.html</loc></url>
+<url><loc>https://oxyppgyn.github.io/parallel.lsm/articles/using-parallel-lsm.html</loc></url>
 <url><loc>https://oxyppgyn.github.io/parallel.lsm/authors.html</loc></url>
 <url><loc>https://oxyppgyn.github.io/parallel.lsm/index.html</loc></url>
 <url><loc>https://oxyppgyn.github.io/parallel.lsm/LICENSE.html</loc></url>
 <url><loc>https://oxyppgyn.github.io/parallel.lsm/reference/index.html</loc></url>
+<url><loc>https://oxyppgyn.github.io/parallel.lsm/reference/list_parallel.lsm.html</loc></url>
 <url><loc>https://oxyppgyn.github.io/parallel.lsm/reference/parallel.lsm.html</loc></url>
 </urlset>
 

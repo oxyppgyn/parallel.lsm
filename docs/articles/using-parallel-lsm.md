@@ -1,0 +1,106 @@
+# Using parallel.lsm
+
+``` r
+library(parallel.lsm)
+library(landscapemetrics)
+```
+
+## What parallel functions are available?
+
+The package provides a version of most functions available in
+*landscapemetrics*. Only a few functions such as those starting with
+“show\_” are explicitly excluded, as they likely are not useful in
+parallel. To see a full list of the functions created when loading
+*parallel.lsm*, use
+[`list_parallel.lsm()`](https://oxyppgyn.github.io/parallel.lsm/reference/list_parallel.lsm.md).
+
+``` r
+list_parallel.lsm()
+```
+
+## How can I adapt my existing landscapemetrics code to this package?
+
+*parallel.lsm* code is predicated on being able to split at least one
+argument into multiple parts, such as when you already plan to iterate
+over multiple rasters, sampling points, or metrics. Luckily, splitting
+the data is the most difficult part (and it can be quite confusing at
+times!). If you can split your data into separate elements, you only
+need to tell *parallel.lsm* what argument(s) you want to split between
+cores and change the function name by adding “paralllel.” to the front.
+
+Note that the number of splits you make will determine how many cores
+you use. For most computers, it is advised to use half of your total
+cores (if attempting to run things in the background or with very large
+rasters) or n - 1 cores (fast, but can hit a memory limit). Most often
+with raster data, the limiting factor is RAM rather than the number of
+cores.
+
+------------------------------------------------------------------------
+
+If you’re doing something like this…
+
+``` r
+data <- NULL
+for (raster in rasters) {
+  raster_data <- lsm_l_ai(landscape = raster)
+  data <- rbind(data, raster_data)
+}
+```
+
+Try this…
+
+``` r
+n_cores <- 4
+rasters <- unname(split(rasters, ceiling(seq_along(rasters) / n_cores)))
+data <- parallel.lsm_l_ai(landscape = rasters, split_on = "landscape")
+```
+
+------------------------------------------------------------------------
+
+If you’re doing something like this…
+
+``` r
+cohesion <- lsm_l_cohesion(landscape = raster)
+iji <- lsm_l_iji(landscape = raster)
+gyrate <- lsm_l_gyrate_mn(landscape = raster)
+pd <- lsm_c_pd(landscape = raster)
+```
+
+Or something like this (but it”s being really slow)…
+
+``` r
+metrics <- c("lsm_l_cohesion", "lsm_l_iji", "lsm_l_gyrate_mn", "lsm_c_pd")
+data <- calculate_lsm(landscape = raster, what = metrics)
+```
+
+Try this…
+
+``` r
+metrics <- c("lsm_l_cohesion", "lsm_l_iji", "lsm_l_gyrate_mn", "lsm_c_pd")
+parallel.calculate_lsm(landscape = raster, what = metrics, split_on = "what")
+```
+
+## Additional Tips
+
+- *terra* is recommended by the developers of *landscapemetrics* over
+  the *raster* package, as things are now optimized for SpatRaster
+  objects.
+
+- The `join_tbl` argument is included in all parallelized functions and
+  allows you to return a list of tibbles rather than one large merged
+  on. If you”re original script does something similar rather than
+  binding rows, use this to avoid a large rewrite.
+
+- [`terra::crop()`](https://rspatial.github.io/terra/reference/crop.html)
+  can be a good tool if you run into issues with RAM usage while using
+  sampling points. Instead of providing one raster covering the entire
+  study area, split the raster into smaller sections covering a specific
+  split subset of sampling points. In cases where you cannot easily
+  split these points based on information such as what site they belong
+  to, consider k-means clustering if needed.
+
+- Splitting on multiple arguments is possible by providing a vector with
+  multiple argument names to `split_on`. The main utility of this is
+  providing plot_id values, but this can also be used if you have
+  settings such as the directions that should be different between
+  different rasters or metrics.
