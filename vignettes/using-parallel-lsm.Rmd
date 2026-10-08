@@ -65,7 +65,7 @@ gyrate <- lsm_l_gyrate_mn(landscape = raster)
 pd <- lsm_c_pd(landscape = raster)
 ```
 
-Or something like this (but it"s being really slow)...
+Or something like this (but it's being really slow)...
 
 ```{r}
 metrics <- c("lsm_l_cohesion", "lsm_l_iji", "lsm_l_gyrate_mn", "lsm_c_pd")
@@ -83,7 +83,7 @@ parallel.calculate_lsm(landscape = raster, what = metrics, split_on = "what")
 
 -   *terra* is recommended by the developers of *landscapemetrics* over the *raster* package, as things are now optimized for SpatRaster objects.
 
--   The `join_tbl` argument is included in all parallelized functions and allows you to return a list of tibbles rather than one large merged on. If you"re original script does something similar rather than binding rows, use this to avoid a large rewrite.
+-   The `join_tbl` argument is included in all parallelized functions and allows you to return a list of tibbles rather than one large merged on. If you're original script does something similar rather than binding rows, use this to avoid a large rewrite.
 
 -   `terra::crop()` can be a good tool if you run into issues with RAM usage while using sampling points. Instead of providing one raster covering the entire study area, split the raster into smaller sections covering a specific split subset of sampling points. In cases where you cannot easily split these points based on information such as what site they belong to, consider k-means clustering if needed.
 
